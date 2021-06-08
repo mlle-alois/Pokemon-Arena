@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+.arena {
+  text-align: center;
+  margin: auto;
+  padding: 2%;
+  background-image: url("assets/arene.png");
+  background-repeat: no-repeat;
+  width: 300px;
+  height: 169px;
+}
