@@ -1,0 +1,10 @@
+<div style="text-align: center;margin: 5%">
+  <app-pokemon [pokemon]="pokemon1" style="float: left"></app-pokemon>
+  <app-pokemon [pokemon]="pokemon2" style="float: right"></app-pokemon>
+
+  <button (click)="fight()">Start</button>
+</div>
+
+<div style="text-align: center">
+  <app-logs [actions]="actions"></app-logs>
+</div>
