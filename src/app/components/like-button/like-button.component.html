@@ -1,0 +1,5 @@
+<button type="button"
+        [disabled]="isLiked"
+        [class.liked]="isLiked"
+        [style.color]="isLiked ? 'red': 'grey'"
+>{{nbLikes}} Like{{nbLikes > 1 ? 's' : ''}}</button>
