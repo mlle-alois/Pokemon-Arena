@@ -1,3 +1,3 @@
-<p>{{pokemon.name}} <br/>hp : {{pokemon.hp}} <span *ngIf="pokemon.hp == 0">DEAD</span></p>
+<p>{{pokemon.name}} <br/>hp : {{pokemon.hp | number : '1.2'}} <span *ngIf="pokemon.hp == 0">DEAD</span></p>
 
 

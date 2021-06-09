@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {PokemonComponent} from './components/pokemon/pokemon.component';
 import {ArenaComponent} from './components/arena/arena.component';
-import { LogsComponent } from './components/logs/logs.component';
+import {LogsComponent} from './components/logs/logs.component';
 
 @NgModule({
   declarations: [

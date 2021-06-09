@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Pokemon} from "../../modeles";
+import {PokemonService} from "../../services/pokemon.service";
 
 @Component({
   selector: 'app-arena',
@@ -10,9 +11,10 @@ export class ArenaComponent implements OnInit {
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
   public actions;
-//  battle: Battle;
+  public isFightStarted:boolean = false;
+  public currentDate:Date;
 
-  constructor() {
+  constructor(private pokemonService: PokemonService) {
   }
 
   ngOnInit(): void {
@@ -44,14 +46,12 @@ export class ArenaComponent implements OnInit {
         attack4Name: "queue de fer"
 
       });
-   /* this.battle = new Battle({
-      poke1: this.pokemon1,
-      poke2: this.pokemon2
-    })*/
     this.actions = [];
   }
 
   async fight(): Promise<Pokemon> {
+    this.isFightStarted = true;
+    this.currentDate = new Date();
     while (this.checkIfBothPokemonAreAlive()) {
       await this.fightOneTurn();
     }
@@ -59,19 +59,19 @@ export class ArenaComponent implements OnInit {
   }
 
   private async fightOneTurn(): Promise<void> {
-    const pokeTurn = Pokemon.WhichShouldAttack(this.pokemon1, this.pokemon2);
+    const pokeTurn = PokemonService.WhichShouldAttack(this.pokemon1, this.pokemon2);
     let res1;
     let res2;
     if (pokeTurn == this.pokemon1) {
-      res1 = await this.pokemon1.randomAttack(this.pokemon2);
-      this.actions.push([res1[0],res1[1]]);
-      res2 = await this.pokemon2.randomAttack(this.pokemon1);
-      this.actions.push([res2[0],res2[1]]);
+      res1 = await this.pokemonService.randomAttack(this.pokemon2, this.pokemon1);
+      this.actions.push([res1[0], res1[1]]);
+      res2 = await this.pokemonService.randomAttack(this.pokemon1, this.pokemon2);
+      this.actions.push([res2[0], res2[1]]);
     } else {
-       res1 = await this.pokemon2.randomAttack(this.pokemon1);
-      this.actions.push([res1[0],res1[1]]);
-       res2 = await this.pokemon1.randomAttack(this.pokemon2);
-      this.actions.push([res2[0],res2[1]]);
+      res1 = await this.pokemonService.randomAttack(this.pokemon1, this.pokemon2);
+      this.actions.push([res1[0], res1[1]]);
+      res2 = await this.pokemonService.randomAttack(this.pokemon2, this.pokemon1);
+      this.actions.push([res2[0], res2[1]]);
     }
 
   }

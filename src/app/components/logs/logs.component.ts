@@ -6,13 +6,12 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
-  @Input() actions:[];
+  @Input() actions: [];
 
   constructor() {
   }
 
   ngOnInit(): void {
-    console.log(this.actions);
   }
 
 }

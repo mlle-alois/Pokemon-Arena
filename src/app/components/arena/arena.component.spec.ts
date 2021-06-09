@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ArenaComponent} from './arena.component';
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {Battle, Pokemon} from "../../modeles";
+import {Pokemon} from "../../modeles";
 
 describe('ArenaComponent', () => {
   let component: ArenaComponent;
