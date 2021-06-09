@@ -8,6 +8,7 @@ export interface IPokemon {
   attack2Name: string;
   attack3Name: string;
   attack4Name: string;
+  color?: string;
 }
 
 export class Pokemon implements IPokemon {
@@ -20,6 +21,8 @@ export class Pokemon implements IPokemon {
   attack2Name: string;
   attack3Name: string;
   attack4Name: string;
+  color?: string;
+
   constructor(props: IPokemon) {
     this.name = props.name;
     this.hp = props.hp;
@@ -31,13 +34,14 @@ export class Pokemon implements IPokemon {
     this.attack2Name = props.attack2Name;
     this.attack3Name = props.attack3Name;
     this.attack4Name = props.attack4Name;
+    this.color = props.color;
   }
 
   private _attack = "attack";
 
   attack1(poke1: Pokemon): number {
-    let damages = this.calculateAttack(poke1) ;
-    poke1.hp = (poke1.hp - damages > 0 ) ? poke1.hp - damages : 0 ;
+    let damages = this.calculateAttack(poke1);
+    poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
     return damages;
 //    return (poke1.hp -= this.calculateAttack(poke1)) > 0 ? poke1.hp : 0;
 
@@ -53,7 +57,7 @@ export class Pokemon implements IPokemon {
 
   attack2(poke1: Pokemon): number {
     let damages = this.calculateAttack(poke1) * 1.2;
-    poke1.hp = (poke1.hp - damages > 0 ) ? poke1.hp - damages : 0 ;
+    poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
     // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.5) > 0 ? poke1.hp : 0;
     return damages;
     //return (poke1.hp -= (this.calculateAttack(poke1)) * 1.2) > 0 ? poke1.hp : 0;
@@ -61,16 +65,16 @@ export class Pokemon implements IPokemon {
 
   attack3(poke1: Pokemon): number {
     let damages = this.calculateAttack(poke1) * 1.3;
-    poke1.hp = (poke1.hp - damages > 0 ) ? poke1.hp - damages : 0 ;
+    poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
 
     return damages;
-   // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.3) > 0 ? poke1.hp : 0;
+    // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.3) > 0 ? poke1.hp : 0;
   }
 
   attack4(poke1: Pokemon): number {
     let damages = this.calculateAttack(poke1) * 1.5;
-    poke1.hp = (poke1.hp - damages > 0 ) ? poke1.hp - damages : 0 ;
-   // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.5) > 0 ? poke1.hp : 0;
+    poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
+    // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.5) > 0 ? poke1.hp : 0;
     return damages;
   }
 
@@ -83,13 +87,13 @@ export class Pokemon implements IPokemon {
       return new Promise(resolve => {
         setTimeout(() => {
           result = this[randomAttack](poke1);
-          resolve([this.name + " attack with " + this[randomAttack+"Name"] + " and does " + result +" damages !","color:black"]  )
+          resolve([this.name + " attack with " + this[randomAttack + "Name"] + " and does " + result + " damages !", this.color ? "color:" + this.color : "color:black"])
         }, 1000);
       });
     } else {
       return new Promise(resolve => {
         setTimeout(() => {
-          resolve([poke1.name + " wins !!","color:red"])
+          resolve([poke1.name + " wins !!", "color:red"])
         }, 1000);
       });
 
