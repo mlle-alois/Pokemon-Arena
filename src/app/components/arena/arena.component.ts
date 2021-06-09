@@ -9,7 +9,7 @@ import {Pokemon} from "../../modeles";
 export class ArenaComponent implements OnInit {
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
-  public actions: string[];
+  public actions;
 //  battle: Battle;
 
   constructor() {
@@ -58,13 +58,20 @@ export class ArenaComponent implements OnInit {
 
   private async fightOneTurn(): Promise<void> {
     const pokeTurn = Pokemon.WhichShouldAttack(this.pokemon1, this.pokemon2);
+    let res1;
+    let res2;
     if (pokeTurn == this.pokemon1) {
-      this.actions.push(await this.pokemon1.randomAttack(this.pokemon2));
-      this.actions.push(await this.pokemon2.randomAttack(this.pokemon1));
+      res1 = await this.pokemon1.randomAttack(this.pokemon2);
+      this.actions.push([res1[0],res1[1]]);
+      res2 = await this.pokemon2.randomAttack(this.pokemon1);
+      this.actions.push([res2[0],res2[1]]);
     } else {
-      this.actions.push(await this.pokemon2.randomAttack(this.pokemon1));
-      this.actions.push(await this.pokemon1.randomAttack(this.pokemon2));
+       res1 = await this.pokemon2.randomAttack(this.pokemon1);
+      this.actions.push([res1[0],res1[1]]);
+       res2 = await this.pokemon1.randomAttack(this.pokemon2);
+      this.actions.push([res2[0],res2[1]]);
     }
+
   }
 
   private checkIfBothPokemonAreAlive(): boolean {

@@ -74,7 +74,7 @@ export class Pokemon implements IPokemon {
     return damages;
   }
 
-  async randomAttack(poke1: Pokemon, forcedNumber?: number): Promise<string> {
+  async randomAttack(poke1: Pokemon, forcedNumber?: number): Promise<string[]> {
     if (this.hp > 0) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
       // let promise = await new Promise(resolve => setTimeout(resolve, 1000));
@@ -83,13 +83,13 @@ export class Pokemon implements IPokemon {
       return new Promise(resolve => {
         setTimeout(() => {
           result = this[randomAttack](poke1);
-          resolve(this.name + " attack with " + this[randomAttack+"Name"] + " and does " + result +" damages !"  )
+          resolve([this.name + " attack with " + this[randomAttack+"Name"] + " and does " + result +" damages !","color:black"]  )
         }, 1000);
       });
     } else {
       return new Promise(resolve => {
         setTimeout(() => {
-          resolve(poke1.name + " wins !!")
+          resolve([poke1.name + " wins !!","color:red"])
         }, 1000);
       });
 
