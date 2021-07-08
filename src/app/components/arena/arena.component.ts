@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Pokemon} from "../../modeles";
 import {PokemonService} from "../../services/pokemon.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-arena',
@@ -11,13 +12,21 @@ export class ArenaComponent implements OnInit {
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
   public actions;
-  public isFightStarted:boolean = false;
-  public currentDate:Date;
+  public isFightStarted: boolean = false;
+  public currentDate: Date;
 
-  constructor(private pokemonService: PokemonService) {
+  constructor(private route: ActivatedRoute, private pokemonService: PokemonService) {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.pokemonService.getPokemonByName(params['pokemon1']).subscribe((pokemon: any) => {
+        console.log(pokemon)
+      })
+      this.pokemonService.getPokemonByName(params['pokemon2']).subscribe((pokemon: any) => {
+        console.log(pokemon)
+      })
+    });
 
     this.pokemon1 = new Pokemon({
       name: "pika",
