@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Pokemon} from "../modeles";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
   private _attack = "attack";
 
@@ -71,12 +72,19 @@ export class PokemonService {
     }
   }
 
-
   private returnAttackUsed(forcedNumber?: number): string {
     if (forcedNumber !== undefined && forcedNumber < 5 && forcedNumber > 0)
       return this._attack + forcedNumber;
     let attack = this._attack;
     attack += Math.floor(Math.random() * 4) + 1;
     return attack;
+  }
+
+  getPokemons() {
+    return this.http.get(`https://pokeapi.co/api/v2/pokemon?limit=10`)
+  }
+
+  getPokemonByName(name: string) {
+    return this.http.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
   }
 }
