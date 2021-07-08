@@ -1,4 +1,6 @@
-<button [disabled]="selectedPokemons.length < 2" (click)="goToArena()">Fight !</button>
+<div style="text-align: center">
+  <button type="button" [disabled]="selectedPokemons.length < 2" (click)="goToArena()">Fight !</button>
+</div>
 <div class="pokemon-grid">
   <div [classList]="selectedPokemons.indexOf(pokemon) === -1 ? 'box' : 'box shadow'" *ngFor="let pokemon of pokemons" (click)="selectPokemon(pokemon)">
     <img [src]="pokemon.sprites.front_default" alt="Pokemon">
