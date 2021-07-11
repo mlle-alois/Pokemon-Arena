@@ -43,7 +43,7 @@ export class ArenaComponent implements OnInit {
           speed: pokemon.stats[5].base_stat,
           attack: pokemon.stats[1].base_stat,
           defense: pokemon.stats[2].base_stat,
-          color: "grey",
+          color: "black",
           attack1Name: moves[0],
           attack2Name: moves[1],
           attack3Name: moves[2],
