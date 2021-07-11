@@ -69,7 +69,7 @@ export class PokemonService {
         let winner:Pokemon = poke1.hp > 0 ? poke1 : poke2
         setTimeout(() => {
           resolve(
-            [winner.name + " wins !!", "color:red"])
+            [winner.name.toUpperCase() + " WINS !!", "color:red"])
         }, 1000);
       });
 
