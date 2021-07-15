@@ -10,7 +10,8 @@ import {Pokemon} from "../../modeles";
 export class PokemonComponent implements OnInit {
   @Input() pokemon: Pokemon;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
