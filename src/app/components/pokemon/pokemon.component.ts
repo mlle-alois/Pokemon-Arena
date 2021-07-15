@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Pokemon} from "../../modeles";
 
+
 @Component({
   selector: 'app-pokemon',
   templateUrl: './pokemon.component.html',

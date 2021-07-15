@@ -21,40 +21,39 @@ export class ArenaComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.pokemonService.getPokemonByName(params['pokemon1']).subscribe((pokemon: any) => {
-        console.log(pokemon)
+        let moves:string[] = this.returnRandomPokemonAttacksNames(pokemon);
+        this.pokemon1 = new Pokemon({
+          name: pokemon.name,
+          hp: pokemon.stats[0].base_stat,
+          speed: pokemon.stats[5].base_stat,
+          attack: pokemon.stats[1].base_stat,
+          defense: pokemon.stats[2].base_stat,
+          color: "green",
+          attack1Name: moves[0],
+          attack2Name: moves[1],
+          attack3Name: moves[2],
+          attack4Name: moves[3],
+          defaultImagePath: pokemon.sprites.back_default
+        });
       })
       this.pokemonService.getPokemonByName(params['pokemon2']).subscribe((pokemon: any) => {
-        console.log(pokemon)
+        let moves:string[] = this.returnRandomPokemonAttacksNames(pokemon);
+        this.pokemon2 = new Pokemon({
+          name: pokemon.name,
+          hp: pokemon.stats[0].base_stat,
+          speed: pokemon.stats[5].base_stat,
+          attack: pokemon.stats[1].base_stat,
+          defense: pokemon.stats[2].base_stat,
+          color: "black",
+          attack1Name: moves[0],
+          attack2Name: moves[1],
+          attack3Name: moves[2],
+          attack4Name: moves[3],
+          defaultImagePath: pokemon.sprites.front_default
+        });
       })
     });
 
-    this.pokemon1 = new Pokemon({
-      name: "pika",
-      hp: 100,
-      speed: 20,
-      attack: 15,
-      defense: 20,
-      color: "orange",
-      attack1Name: "charge",
-      attack2Name: "éclair",
-      attack3Name: "vive attaque",
-      attack4Name: "queue de fer"
-    })
-
-    this.pokemon2 = new Pokemon(
-      {
-        name: "rattatack",
-        hp: 80,
-        speed: 15,
-        attack: 10,
-        defense: 30,
-        color: "grey",
-        attack1Name: "charge",
-        attack2Name: "rugissement",
-        attack3Name: "vive attaque",
-        attack4Name: "queue de fer"
-
-      });
     this.actions = [];
   }
 
@@ -91,9 +90,30 @@ export class ArenaComponent implements OnInit {
 
   private async CheckIfThereWinner(): Promise<Pokemon> {
     if (this.pokemon1.hp <= 0) {
+      //change image to dead
+      ///this.pokemon1.defaultImagePath="assets/grave.png";
       return Promise.resolve(this.pokemon2);
     }
+    //this.pokemon2.defaultImagePath="assets/grave.png";
     return Promise.resolve(this.pokemon1);
   }
+
+  private returnRandomPokemonAttacksNames(pokemon:any): string[]{
+   let result:string[] = [];
+   let resultTemp:string[];
+   let movesLength:number = pokemon.moves.length;
+    resultTemp = pokemon.moves.map(move => {return move.move.name
+    })
+    if(movesLength <= 5){
+      resultTemp.pop();
+      result = resultTemp;
+       return result;
+    }
+    result.push(resultTemp[Math.floor(Math.random() * movesLength/4)])
+    result.push(resultTemp[Math.floor(Math.random() * (movesLength/4*2 - movesLength/4))])
+    result.push(resultTemp[Math.floor(Math.random() * (movesLength/4*3 - movesLength/4*2))])
+    result.push(resultTemp[Math.floor(Math.random() * (movesLength-1 - movesLength/4*3))])
+    return result;
+    }
 
 }

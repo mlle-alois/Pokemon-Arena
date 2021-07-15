@@ -16,7 +16,7 @@ export class PokemonService {
   }
 
   private calculateAttack(poke1: Pokemon,poke2: Pokemon): number {
-    return (poke2.attack / 1 + (poke1.defense / 5));
+    return (poke2.attack  / (poke1.defense / 10));
   }
 
   attack1(poke1: Pokemon, poke2: Pokemon): number {
@@ -51,7 +51,8 @@ export class PokemonService {
   }
 
   async randomAttack(poke1: Pokemon, poke2: Pokemon, forcedNumber?: number): Promise<string[]> {
-    if (poke2.hp > 0) {
+
+    if (poke2.hp > 0 && poke1.hp > 0) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
       // let promise = await new Promise(resolve => setTimeout(resolve, 1000));
       let result: any;
@@ -59,13 +60,16 @@ export class PokemonService {
       return new Promise(resolve => {
         setTimeout(() => {
           result = this[randomAttack](poke1, poke2);
-          resolve([poke2.name + " attack with " + this[randomAttack + "Name"] + " and does " + result + " damages !", poke2.color ? "color:" + poke2.color : "color:black"])
+          console.log()
+          resolve([poke2.name + " attack with " + poke2[randomAttack+"Name"] + " and does " + result + " damages !", poke2.color ? "color:" + poke2.color : "color:black"])
         }, 1000);
       });
     } else {
       return new Promise(resolve => {
+        let winner:Pokemon = poke1.hp > 0 ? poke1 : poke2
         setTimeout(() => {
-          resolve([poke1.name + " wins !!", "color:red"])
+          resolve(
+            [winner.name.toUpperCase() + " WINS !!", "color:orange"])
         }, 1000);
       });
 
@@ -87,4 +91,5 @@ export class PokemonService {
   getPokemonByName(name: string) {
     return this.http.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
   }
+
 }

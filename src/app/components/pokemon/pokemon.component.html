@@ -1,3 +1,16 @@
-<p>{{pokemon.name}} <br/>hp : {{pokemon.hp | number : '1.2'}} <span *ngIf="pokemon.hp == 0">DEAD</span></p>
+
+<p *ngIf="pokemon.hp == 0; else pokemonIsAlive"><img [src] ="'assets/grave.png'"
+                                                       style="width: 180px;height: 120px;"></p>
+<ng-template #pokemonIsAlive><img [src] ="pokemon.defaultImagePath"
+                                  style="width: 180px;height: 120px;"></ng-template>
+
+
+
+
+<p>{{pokemon.name}} <br/>hp : {{pokemon.hp | number : '1.2'}}<span *ngIf="pokemon.hp == 0">DEAD</span>
+</p>
+
+<p><mat-progress-bar mode="determinate" color="green" value="{{(pokemon.hp/pokemon.initialHp)*100 | number : '1.0-0'}}"></mat-progress-bar></p>
+
 
 

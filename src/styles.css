@@ -4,8 +4,9 @@
   padding: 2%;
   background-image: url("assets/arene.png");
   background-repeat: no-repeat;
-  width: 300px;
-  height: 169px;
+  background-size : contain;
+  width: 900px;
+  height: 507px;
 }
 
 * {
@@ -13,6 +14,16 @@
   margin: 0;
 }
 
+
 body {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+mat-progress-bar .mat-progress-bar-buffer {
+  background: #fc0808;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
