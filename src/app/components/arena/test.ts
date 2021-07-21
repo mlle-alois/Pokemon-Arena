@@ -1,3 +1,4 @@
+
 import {Component, OnInit} from '@angular/core';
 import {Pokemon} from "../../modeles";
 import {PokemonService} from "../../services/pokemon.service";
@@ -34,6 +35,7 @@ export class ArenaComponent implements OnInit {
           attack3Name: moves[2],
           attack4Name: moves[3],
           defaultImagePath: pokemon.sprites.back_default
+
         });
       })
       this.pokemonService.getPokemonByName(params['pokemon2']).subscribe((pokemon: any) => {
@@ -50,6 +52,7 @@ export class ArenaComponent implements OnInit {
           attack3Name: moves[2],
           attack4Name: moves[3],
           defaultImagePath: pokemon.sprites.front_default
+
         });
       })
     });
