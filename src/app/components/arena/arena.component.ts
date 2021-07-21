@@ -12,7 +12,7 @@ import {Observable} from "rxjs";
 export class ArenaComponent implements OnInit {
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
-  public actions;
+  public actions: string[][] = [];
   public isFightStarted: boolean = false;
   public currentDate: Date;
 

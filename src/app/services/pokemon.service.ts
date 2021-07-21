@@ -11,7 +11,7 @@ export class PokemonService {
   private subscriber: Subscription;
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
-  public actions:string[] = [];
+  public actions:string[][] = [];
   constructor(private http: HttpClient) {
   }
 
@@ -52,12 +52,12 @@ export class PokemonService {
     return damages;
   }
 
-  fight(): Observable<string[]> {
-    return interval(1000).pipe(map(() => this.round()))
+  fight(): Observable<string[][]> {
+    return interval(3000).pipe(map(() => this.round()))
   }
 
 
-  round( forcedNumber?: number): string[] {
+  round( forcedNumber?: number): string[][] {
 
     if (this.BothPokemonAreAlive()) {
     const pokemonsInAttackOrder :Pokemon[] = this.WhichShouldAttack();
@@ -66,7 +66,7 @@ export class PokemonService {
 
     } else {
       let winner: Pokemon = this.pokemon1.hp > 0 ? this.pokemon1 : this.pokemon2;
-      this.actions.push(winner.name.toUpperCase() + " WINS !!", "color:orange");
+      this.actions.push([winner.name.toUpperCase() + " WINS !!", "color:orange"]);
     }
     return this.actions;
   }
@@ -99,8 +99,8 @@ export class PokemonService {
     if (this.BothPokemonAreAlive()) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
       this[randomAttack](poke1,poke2);
-      this.actions.push(poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does "
-        + this.getDifferenceofHp(poke1, poke2) + " damages !", poke2.color ? "color:" + poke2.color : "color:black");
+      this.actions.push([poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does "
+        + this.getDifferenceofHp(poke1, poke2) + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]);
 
     }
   }
