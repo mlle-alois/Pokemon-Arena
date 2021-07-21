@@ -7,6 +7,7 @@
   background-size : contain;
   width: 900px;
   height: 507px;
+  position: relative;
 }
 
 * {
@@ -19,9 +20,17 @@ body {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+.mat-progress-bar-fill::after{
+  background-color: #82f882;
+}
+
+
+
 mat-progress-bar .mat-progress-bar-buffer {
   background: #fc0808;
 }
+
+
 
 
 html, body { height: 100%; }
