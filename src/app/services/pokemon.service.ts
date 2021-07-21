@@ -70,7 +70,7 @@ export class PokemonService {
     } else {
       let winner: Pokemon = this.pokemon1.hp > 0 ? this.pokemon1 : this.pokemon2;
       this.actions.push([winner.name.toUpperCase() + " WINS !!", "color:orange"]);
-      this.isBattleOver = true;
+      this.isBattleOver = true; 
     }
     return this.actions;
   }
