@@ -12,8 +12,8 @@ export class PokemonService {
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
 
-  public isBattleOver:boolean = false;
-  public actions:string[][] = [];
+  public isBattleOver: boolean = false;
+  public actions: string[][] = [];
 
   constructor(private http: HttpClient) {
   }
@@ -56,7 +56,7 @@ export class PokemonService {
   }
 
   fight(): Observable<string[][]> {
-    return interval(1000).pipe(map(() => this.round()),takeWhile((actions) =>
+    return interval(1000).pipe(map(() => this.round()), takeWhile((actions) =>
       !this.isBattleOver
     ))
   }
@@ -72,7 +72,7 @@ export class PokemonService {
     } else {
       let winner: Pokemon = this.pokemon1.hp > 0 ? this.pokemon1 : this.pokemon2;
       this.actions.push([winner.name.toUpperCase() + " WINS !!", "color:orange"]);
-      this.isBattleOver = true; 
+      this.isBattleOver = true;
     }
     return this.actions;
   }
@@ -97,16 +97,13 @@ export class PokemonService {
     return this.pokemon1.hp > 0 && this.pokemon2.hp > 0;
   }
 
-  private getDifferenceofHp(poke1: Pokemon, poke2: Pokemon): number {
-    return Math.round(poke1.hp - poke2.hp * 100) / 100;
-  }
-
   private attackAndAddResultToLog(poke1: Pokemon, poke2: Pokemon, forcedNumber?: number) {
     if (this.BothPokemonAreAlive()) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
-     let attack = this[randomAttack](poke1,poke2);
+      let attack = this[randomAttack](poke1, poke2);
+      attack = Math.round(attack * 100) / 100;
       this.actions.push([poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does "
-        + attack + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]);
+      + attack + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]);
 
     }
   }
