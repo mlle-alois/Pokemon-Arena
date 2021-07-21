@@ -66,7 +66,7 @@ export class SelectPokemonComponent implements OnInit {
   searchPokemon() {
     this.pokemons = [];
     const formValues = this.searchForm.value;
-    this.pokemonService.getPokemonByName(formValues["name"]).subscribe((resp: any) => {
+    this.pokemonService.getPokemonByName(formValues["name"].toLowerCase()).subscribe((resp: any) => {
       this.pokemons.push(resp);
     });
   }
