@@ -62,6 +62,7 @@ export class PokemonService {
       return new Promise(resolve => {
         const obs = new Observable(observer => {
           result = this[randomAttack](poke1, poke2);
+          result = Math.round(result * 100)/100;
           const interval = setInterval(() => observer.next([poke2.name + " attack with " + poke2[randomAttack+"Name"] + " and does " + result + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]), 1000);
           return () => {
             observer.complete();
