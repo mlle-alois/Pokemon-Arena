@@ -1,8 +1,22 @@
-<div style="text-align: center">
-  <button type="button" [disabled]="selectedPokemons.length < 2" (click)="goToArena()">Fight !</button>
+<div style="text-align: left">
+  <div *ngIf="selectedPokemons.length > 0" class="selected-pokemons">
+    <p>Pokémons sélectionnés :</p>
+    <li *ngFor="let pokemon of selectedPokemons">{{pokemon.name}}</li>
+  </div>
+  <button class="button" type="button" [disabled]="selectedPokemons.length < 2" (click)="goToArena()">Fight !</button>
+  <form [formGroup]="searchForm" (ngSubmit)="searchPokemon()" style="float: right; margin-right: 50px">
+      <input type="text" placeholder="Nom du pokemon" formControlName="name" required>
+      <button class="button" type="submit" [disabled]=!searchForm.valid>Search</button>
+  </form>
+  <div style="text-align: right">
+    <form [formGroup]="clearForm" (ngSubmit)="clearPokemons()">
+      <button class="clear" type="submit">Clear</button>
+    </form>
+  </div>
 </div>
 <div class="pokemon-grid">
-  <div [classList]="selectedPokemons.indexOf(pokemon) === -1 ? 'box' : 'box shadow'" *ngFor="let pokemon of pokemons" (click)="selectPokemon(pokemon)">
+  <div [classList]="selectedPokemons.indexOf(pokemon) === -1 ? 'box' : 'box shadow'" *ngFor="let pokemon of pokemons"
+       (click)="selectPokemon(pokemon)">
     <img [src]="pokemon.sprites.front_default" alt="Pokemon">
     <h3>{{pokemon.name}}</h3>
     <p><b>Type : </b>{{pokemon.types[0].type.name}}</p>

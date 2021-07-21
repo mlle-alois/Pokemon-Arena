@@ -11,15 +11,17 @@ export class PokemonService {
   private subscriber: Subscription;
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
+
   public isBattleOver:boolean = false;
   public actions:string[][] = [];
+
   constructor(private http: HttpClient) {
   }
 
   private _attack = "attack";
 
   private WhichShouldAttack(): Pokemon[] {
-    return this.pokemon1.speed >= this.pokemon2.speed ? [this.pokemon1,this.pokemon2] : [this.pokemon2,this.pokemon1];
+    return this.pokemon1.speed >= this.pokemon2.speed ? [this.pokemon1, this.pokemon2] : [this.pokemon2, this.pokemon1];
   }
 
   private calculateAttack(poke1: Pokemon, poke2: Pokemon): number {
@@ -60,12 +62,12 @@ export class PokemonService {
   }
 
 
-  round( forcedNumber?: number): string[][] {
+  round(forcedNumber?: number): string[][] {
 
     if (this.BothPokemonAreAlive()) {
-    const pokemonsInAttackOrder :Pokemon[] = this.WhichShouldAttack();
-    this.attackAndAddResultToLog(pokemonsInAttackOrder[0],pokemonsInAttackOrder[1],forcedNumber);
-    this.attackAndAddResultToLog(pokemonsInAttackOrder[1],pokemonsInAttackOrder[0],forcedNumber);
+      const pokemonsInAttackOrder: Pokemon[] = this.WhichShouldAttack();
+      this.attackAndAddResultToLog(pokemonsInAttackOrder[0], pokemonsInAttackOrder[1], forcedNumber);
+      this.attackAndAddResultToLog(pokemonsInAttackOrder[1], pokemonsInAttackOrder[0], forcedNumber);
 
     } else {
       let winner: Pokemon = this.pokemon1.hp > 0 ? this.pokemon1 : this.pokemon2;
@@ -95,11 +97,11 @@ export class PokemonService {
     return this.pokemon1.hp > 0 && this.pokemon2.hp > 0;
   }
 
-  private getDifferenceofHp(poke1:Pokemon,poke2:Pokemon) :number{
-    return poke1.hp - poke2.hp;
+  private getDifferenceofHp(poke1: Pokemon, poke2: Pokemon): number {
+    return Math.round(poke1.hp - poke2.hp * 100) / 100;
   }
 
-  private attackAndAddResultToLog(poke1:Pokemon,poke2:Pokemon,forcedNumber?: number) {
+  private attackAndAddResultToLog(poke1: Pokemon, poke2: Pokemon, forcedNumber?: number) {
     if (this.BothPokemonAreAlive()) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
      let attack = this[randomAttack](poke1,poke2);
