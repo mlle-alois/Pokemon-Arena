@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from "../../services/pokemon.service";
 import {Router} from "@angular/router";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-select-pokemon',
@@ -11,12 +12,26 @@ export class SelectPokemonComponent implements OnInit {
 
   pokemons: any[] = [];
   selectedPokemons: any[] = [];
+  searchForm: FormGroup;
+  clearForm: FormGroup;
 
   constructor(private pokemonService: PokemonService,
+              private formBuilder: FormBuilder,
               private router: Router) {
+    this.searchForm = this.formBuilder.group({
+      'name': ['', [Validators.required]]
+    });
+    this.clearForm = this.formBuilder.group({
+      '': ['', []]
+    });
   }
 
   ngOnInit(): void {
+    this.initPokemons();
+  }
+
+  initPokemons() {
+    this.pokemons = [];
     this.pokemonService.getPokemons().subscribe((response: any) => {
       response.results.forEach(res => {
         this.pokemonService.getPokemonByName(res.name).subscribe((resp: any) => {
@@ -46,6 +61,18 @@ export class SelectPokemonComponent implements OnInit {
         }
       })
     }
+  }
+
+  searchPokemon() {
+    this.pokemons = [];
+    const formValues = this.searchForm.value;
+    this.pokemonService.getPokemonByName(formValues["name"]).subscribe((resp: any) => {
+      this.pokemons.push(resp);
+    });
+  }
+
+  clearPokemons() {
+    this.initPokemons();
   }
 
 }

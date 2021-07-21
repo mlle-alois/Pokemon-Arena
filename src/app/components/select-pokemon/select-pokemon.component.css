@@ -1,3 +1,9 @@
+.selected-pokemons {
+  float: left;
+  margin: 10px 100px 0 50px;
+  text-align: left;
+}
+
 .pokemon-grid {
   display: grid;
   grid-gap: 16px;
@@ -24,7 +30,7 @@
   margin: 0 auto;
 }
 
-button {
+.button {
   display: inline-block;
   border-radius: 10px;
   border: 4px double #cccccc;
@@ -32,5 +38,13 @@ button {
   font-size: 28px;
   padding: 20px;
   width: 200px;
-  margin: 5px;
+  margin: 10px;
+}
+
+.clear {
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  width: 100px;
+  margin: 10px;
 }

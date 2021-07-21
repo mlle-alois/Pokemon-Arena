@@ -13,6 +13,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
