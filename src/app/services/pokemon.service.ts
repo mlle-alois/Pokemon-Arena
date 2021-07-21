@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Pokemon} from "../modeles";
 import {HttpClient} from "@angular/common/http";
 import {interval, Observable, Subscription} from "rxjs";
-import {map} from "rxjs/operators";
+import {map, takeWhile} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class PokemonService {
   private subscriber: Subscription;
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
+  public isBattleOver:boolean = false;
   public actions:string[][] = [];
   constructor(private http: HttpClient) {
   }
@@ -53,7 +54,9 @@ export class PokemonService {
   }
 
   fight(): Observable<string[][]> {
-    return interval(3000).pipe(map(() => this.round()))
+    return interval(1000).pipe(map(() => this.round()),takeWhile((actions) =>
+      !this.isBattleOver
+    ))
   }
 
 
@@ -67,6 +70,7 @@ export class PokemonService {
     } else {
       let winner: Pokemon = this.pokemon1.hp > 0 ? this.pokemon1 : this.pokemon2;
       this.actions.push([winner.name.toUpperCase() + " WINS !!", "color:orange"]);
+      this.isBattleOver = true;
     }
     return this.actions;
   }
@@ -98,9 +102,9 @@ export class PokemonService {
   private attackAndAddResultToLog(poke1:Pokemon,poke2:Pokemon,forcedNumber?: number) {
     if (this.BothPokemonAreAlive()) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
-      this[randomAttack](poke1,poke2);
+     let attack = this[randomAttack](poke1,poke2);
       this.actions.push([poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does "
-        + this.getDifferenceofHp(poke1, poke2) + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]);
+        + attack + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]);
 
     }
   }
