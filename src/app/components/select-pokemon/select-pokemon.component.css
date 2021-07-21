@@ -48,3 +48,12 @@
   width: 100px;
   margin: 10px;
 }
+
+li {
+  list-style-type: none;
+  padding-left: 2rem;
+  background-image: url(../../../assets/pokeball.png);
+  background-position: 0 0;
+  background-size: 20px;
+  background-repeat: no-repeat;
+}
