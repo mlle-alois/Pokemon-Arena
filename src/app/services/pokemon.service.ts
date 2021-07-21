@@ -1,22 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Pokemon} from "../modeles";
 import {HttpClient} from "@angular/common/http";
+import {Observable, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
+  private subscriber: Subscription;
 
   constructor(private http: HttpClient) {
   }
+
   private _attack = "attack";
 
   static WhichShouldAttack(poke1: Pokemon, poke2: Pokemon): Pokemon {
     return poke1.speed >= poke2.speed ? poke1 : poke2;
   }
 
-  private calculateAttack(poke1: Pokemon,poke2: Pokemon): number {
-    return (poke2.attack  / (poke1.defense / 10));
+  private calculateAttack(poke1: Pokemon, poke2: Pokemon): number {
+    return (poke2.attack / (poke1.defense / 10));
   }
 
   attack1(poke1: Pokemon, poke2: Pokemon): number {
@@ -50,7 +53,7 @@ export class PokemonService {
     return damages;
   }
 
-  async randomAttack(poke1: Pokemon, poke2: Pokemon, forcedNumber?: number): Promise<string[]> {
+  async randomAttack(poke1: Pokemon, poke2: Pokemon, forcedNumber?: number): Promise<any> {
 
     if (poke2.hp > 0 && poke1.hp > 0) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
@@ -58,19 +61,23 @@ export class PokemonService {
       let result: any;
 
       return new Promise(resolve => {
-        setTimeout(() => {
+        const obs = new Observable(observer => {
           result = this[randomAttack](poke1, poke2);
-          console.log()
-          resolve([poke2.name + " attack with " + poke2[randomAttack+"Name"] + " and does " + result + " damages !", poke2.color ? "color:" + poke2.color : "color:black"])
-        }, 1000);
+          result = Math.round(result * 100) / 100;
+          const interval = setInterval(() => observer.next([poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does " + result + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]), 1000);
+          return () => {
+            observer.complete();
+            clearInterval(interval);
+          }
+        });
+        this.subscriber = obs.subscribe(value => {
+          resolve(value);
+        });
       });
     } else {
       return new Promise(resolve => {
-        let winner:Pokemon = poke1.hp > 0 ? poke1 : poke2
-        setTimeout(() => {
-          resolve(
-            [winner.name.toUpperCase() + " WINS !!", "color:orange"])
-        }, 1000);
+        let winner: Pokemon = poke1.hp > 0 ? poke1 : poke2;
+        resolve([winner.name.toUpperCase() + " WINS !!", "color:orange"]);
       });
 
     }

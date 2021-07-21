@@ -2,7 +2,7 @@
   <app-pokemon class="pokemon1" [pokemon]="pokemon1" style="float: left;background-color: white;"></app-pokemon>
   <app-pokemon class="pokemon2" [pokemon]="pokemon2" style="float: right;background-color: white"></app-pokemon>
 
-  <button (click)="fight()">Start</button>
+  <button type="button" (click)="fight()">Start</button>
 </div>
 <div *ngIf="isFightStarted" style="text-align: center">{{ currentDate | date : 'dd/MM/yyyy, HH:mm:ss'}}  </div>
 <div style="text-align: center">

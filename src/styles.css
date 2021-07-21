@@ -30,6 +30,19 @@ mat-progress-bar .mat-progress-bar-buffer {
   background: #fc0808;
 }
 
+.arena button {
+  display: inline-block;
+  border-radius: 10px;
+  border: 4px double #cccccc;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  margin: 5px;
+  color: white;
+  background-color: seagreen;
+}
+
 
 
 
