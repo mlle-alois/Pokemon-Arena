@@ -1,4 +1,4 @@
-<div *ngIf="pokemon">
+ <div *ngIf="pokemon">
   <p *ngIf="pokemon.hp == 0; else pokemonIsAlive"><img [src]="'assets/grave.png'"
                                                        style="width: 180px;height: 120px;"></p>
   <ng-template #pokemonIsAlive><img [src]="pokemon.defaultImagePath"
@@ -13,6 +13,3 @@
                       value="{{(pokemon.hp/pokemon.initialHp)*100 | number : '1.0-0'}}"></mat-progress-bar>
   </p>
 </div>
-
-
-

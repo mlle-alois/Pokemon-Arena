@@ -1,0 +1,13 @@
+.pokemon1{
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+}
+
+
+.pokemon2{
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
