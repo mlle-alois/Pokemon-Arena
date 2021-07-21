@@ -21,7 +21,6 @@ export class SelectPokemonComponent implements OnInit {
       response.results.forEach(res => {
         this.pokemonService.getPokemonByName(res.name).subscribe((resp: any) => {
           this.pokemons.push(resp);
-          console.log(resp)
         });
       });
     });
