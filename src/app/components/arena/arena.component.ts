@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Pokemon} from "../../modeles";
 import {PokemonService} from "../../services/pokemon.service";
 import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-arena',
@@ -35,6 +36,7 @@ export class ArenaComponent implements OnInit {
           attack4Name: moves[3],
           defaultImagePath: pokemon.sprites.back_default
         });
+        this.pokemonService.pokemon1 = this.pokemon1;
       })
       this.pokemonService.getPokemonByName(params['pokemon2']).subscribe((pokemon: any) => {
         let moves: string[] = this.returnRandomPokemonAttacksNames(pokemon);
@@ -51,21 +53,28 @@ export class ArenaComponent implements OnInit {
           attack4Name: moves[3],
           defaultImagePath: pokemon.sprites.front_default
         });
+        this.pokemonService.pokemon2 = this.pokemon2;
       })
     });
+
+
 
     this.actions = [];
   }
 
-  async fight(): Promise<Pokemon> {
+  fight() {
     this.isFightStarted = true;
     this.currentDate = new Date();
-    while (this.checkIfBothPokemonAreAlive()) {
+    this.pokemonService.fight().subscribe((actions) => {
+      this.actions = actions;
+    });
+
+    /*while (this.checkIfBothPokemonAreAlive()) {
       await this.fightOneTurn();
     }
-    return await this.CheckIfThereWinner();
+    return await this.CheckIfThereWinner();*/
   }
-
+/*
   private async fightOneTurn(): Promise<void> {
     const pokeTurn = PokemonService.WhichShouldAttack(this.pokemon1, this.pokemon2);
     let res1;
@@ -94,7 +103,7 @@ export class ArenaComponent implements OnInit {
     }
     return Promise.resolve(this.pokemon1);
   }
-
+*/
   private returnRandomPokemonAttacksNames(pokemon:any): string[]{
     let result:string[] = [];
     let resultTemp:string[];

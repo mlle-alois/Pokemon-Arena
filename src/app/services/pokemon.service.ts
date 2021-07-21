@@ -1,21 +1,24 @@
 import {Injectable} from '@angular/core';
 import {Pokemon} from "../modeles";
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subscription} from "rxjs";
+import {interval, Observable, Subscription} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
   private subscriber: Subscription;
-
+  public pokemon1: Pokemon;
+  public pokemon2: Pokemon;
+  public actions:string[] = [];
   constructor(private http: HttpClient) {
   }
 
   private _attack = "attack";
 
-  static WhichShouldAttack(poke1: Pokemon, poke2: Pokemon): Pokemon {
-    return poke1.speed >= poke2.speed ? poke1 : poke2;
+  private WhichShouldAttack(): Pokemon[] {
+    return this.pokemon1.speed >= this.pokemon2.speed ? [this.pokemon1,this.pokemon2] : [this.pokemon2,this.pokemon1];
   }
 
   private calculateAttack(poke1: Pokemon, poke2: Pokemon): number {
@@ -26,16 +29,13 @@ export class PokemonService {
     let damages = this.calculateAttack(poke1, poke2);
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
     return damages;
-//    return (poke1.hp -= this.calculateAttack(poke1)) > 0 ? poke1.hp : 0;
 
   }
 
   attack2(poke1: Pokemon, poke2: Pokemon): number {
     let damages = this.calculateAttack(poke1, poke2) * 1.2;
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
-    // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.5) > 0 ? poke1.hp : 0;
     return damages;
-    //return (poke1.hp -= (this.calculateAttack(poke1)) * 1.2) > 0 ? poke1.hp : 0;
   }
 
   attack3(poke1: Pokemon, poke2: Pokemon): number {
@@ -43,44 +43,32 @@ export class PokemonService {
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
 
     return damages;
-    // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.3) > 0 ? poke1.hp : 0;
+
   }
 
   attack4(poke1: Pokemon, poke2: Pokemon): number {
     let damages = this.calculateAttack(poke1, poke2) * 1.5;
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
-    // return (poke1.hp -= (this.calculateAttack(poke1)) * 1.5) > 0 ? poke1.hp : 0;
     return damages;
   }
 
-  async randomAttack(poke1: Pokemon, poke2: Pokemon, forcedNumber?: number): Promise<any> {
+  fight(): Observable<string[]> {
+    return interval(1000).pipe(map(() => this.round()))
+  }
 
-    if (poke2.hp > 0 && poke1.hp > 0) {
-      let randomAttack = this.returnAttackUsed(forcedNumber);
-      // let promise = await new Promise(resolve => setTimeout(resolve, 1000));
-      let result: any;
 
-      return new Promise(resolve => {
-        const obs = new Observable(observer => {
-          result = this[randomAttack](poke1, poke2);
-          result = Math.round(result * 100) / 100;
-          const interval = setInterval(() => observer.next([poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does " + result + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]), 1000);
-          return () => {
-            observer.complete();
-            clearInterval(interval);
-          }
-        });
-        this.subscriber = obs.subscribe(value => {
-          resolve(value);
-        });
-      });
+  round( forcedNumber?: number): string[] {
+
+    if (this.BothPokemonAreAlive()) {
+    const pokemonsInAttackOrder :Pokemon[] = this.WhichShouldAttack();
+    this.attackAndAddResultToLog(pokemonsInAttackOrder[0],pokemonsInAttackOrder[1],forcedNumber);
+    this.attackAndAddResultToLog(pokemonsInAttackOrder[1],pokemonsInAttackOrder[0],forcedNumber);
+
     } else {
-      return new Promise(resolve => {
-        let winner: Pokemon = poke1.hp > 0 ? poke1 : poke2;
-        resolve([winner.name.toUpperCase() + " WINS !!", "color:orange"]);
-      });
-
+      let winner: Pokemon = this.pokemon1.hp > 0 ? this.pokemon1 : this.pokemon2;
+      this.actions.push(winner.name.toUpperCase() + " WINS !!", "color:orange");
     }
+    return this.actions;
   }
 
   private returnAttackUsed(forcedNumber?: number): string {
@@ -99,4 +87,21 @@ export class PokemonService {
     return this.http.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
   }
 
+  private BothPokemonAreAlive(): boolean {
+    return this.pokemon1.hp > 0 && this.pokemon2.hp > 0;
+  }
+
+  private getDifferenceofHp(poke1:Pokemon,poke2:Pokemon) :number{
+    return poke1.hp - poke2.hp;
+  }
+
+  private attackAndAddResultToLog(poke1:Pokemon,poke2:Pokemon,forcedNumber?: number) {
+    if (this.BothPokemonAreAlive()) {
+      let randomAttack = this.returnAttackUsed(forcedNumber);
+      this[randomAttack](poke1,poke2);
+      this.actions.push(poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does "
+        + this.getDifferenceofHp(poke1, poke2) + " damages !", poke2.color ? "color:" + poke2.color : "color:black");
+
+    }
+  }
 }
