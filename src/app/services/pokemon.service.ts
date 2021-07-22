@@ -12,8 +12,8 @@ export class PokemonService {
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
 
-  public isBattleOver:boolean = false;
-  public actions:string[][] = [];
+  public isBattleOver: boolean = false;
+  public actions: string[][] = [];
 
   constructor(private http: HttpClient) {
   }
@@ -56,7 +56,7 @@ export class PokemonService {
   }
 
   fight(): Observable<string[][]> {
-    return interval(1000).pipe(map(() => this.round()),takeWhile((actions) =>
+    return interval(1000).pipe(map(() => this.round()), takeWhile((actions) =>
       !this.isBattleOver
     ))
   }
@@ -101,10 +101,10 @@ export class PokemonService {
   private attackAndAddResultToLog(poke1: Pokemon, poke2: Pokemon, forcedNumber?: number) {
     if (this.BothPokemonAreAlive()) {
       let randomAttack = this.returnAttackUsed(forcedNumber);
-     let attack = this[randomAttack](poke1,poke2);
-     attack = Math.round(attack*100)/100
+      let attack = this[randomAttack](poke1, poke2);
+      attack = Math.round(attack * 100) / 100
       this.actions.push([poke2.name + " attack with " + poke2[randomAttack + "Name"] + " and does "
-        + attack + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]);
+      + attack + " damages !", poke2.color ? "color:" + poke2.color : "color:black"]);
 
     }
   }
