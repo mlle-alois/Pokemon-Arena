@@ -57,7 +57,7 @@ export class ArenaComponent implements OnInit {
       })
     });
 
-
+  this.pokemonService.isBattleOver = false;
 
     this.actions = [];
   }
