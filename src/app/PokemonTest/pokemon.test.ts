@@ -43,29 +43,24 @@ describe('Combat entre pokemons', () => {
       });
 
   });
-  it('rattack should attack pikachu with 21', () => {
-    //expect(pokemonService.attack1(rattatack, pikachu)).toBe(21);
-    expect(21).toBe(21);
+  it('rattack should attack pikachu with 5', () => {
+    expect(pokemonService.attack1(rattatack, pikachu)).toBe(5);
   });
 
-  /*it('pikachu should attack rattack with 14', () => {
-    const pokemonService = TestBed.get(PokemonService);
-    expect(pokemonService.attack1(pikachu, rattatack)).toBe(14);
+  it('pikachu should attack rattack with 5', () => {
+    expect(pokemonService.attack1(pikachu, rattatack)).toBe(5);
   });
 
-  it('rattack should attack pikachu and his hp should be 16.8', () => {
-    let pokemonService: PokemonService = TestBed.get(PokemonService);
-    expect(pokemonService.attack2(pikachu, rattatack)).toBe(16.8);
+  it('rattack should attack pikachu and his hp should be 6', () => {
+    expect(pokemonService.attack2(pikachu, rattatack)).toBe(6);
   });
 
-  it('rattack should attack pikachu with 18.2', () => {
-    let pokemonService: PokemonService = TestBed.get(PokemonService);
-    expect(pokemonService.attack3(pikachu, rattatack)).toBe(18.2);
+  it('rattack should attack pikachu with 6.5', () => {
+    expect(pokemonService.attack3(pikachu, rattatack)).toBe(6.5);
   });
 
-  it('rattack should attack pikachu with 21', () => {
-    let pokemonService: PokemonService = TestBed.get(PokemonService);
-    expect(pokemonService.attack4(pikachu, rattatack)).toBe(21);
+  it('rattack should attack pikachu with 7.5', () => {
+    expect(pokemonService.attack4(pikachu, rattatack)).toBe(7.5);
   });
 
   /*it('rattack should random attack pikachu with message rattatack attack with charge and does 14 damages !', async () => {
