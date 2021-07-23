@@ -79,5 +79,25 @@ describe('Combat entre pokemons', () => {
     expect(await pokemonService.randomAttack(pikachu, rattatack, 4)).toBe("rattatack attack with queue de fer and does 21 damages !");
   });*/
 
+//   it('should return 10 pokemons', () => {
+//     expect(pokemonService.getPokemons().length).toBe(10);
+//   });
+
+  it('should return 10 pokemons', () => {
+    pokemonService.getPokemons().subscribe((resp: any) => {
+        expect(resp.length).toBe(10);
+      });
+    
+  });
+
+  it('should return pokemon pikachu with hp 30', () => {
+    pokemonService.getPokemonByName("pikachu").subscribe((resp: any) => {
+        expect(resp.name).toBe("pikachu");
+        expect(resp.stats[0].base_stat).toBe(30); //hp
+      });
+  });
+
+
+
 
 });
