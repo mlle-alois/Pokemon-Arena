@@ -81,16 +81,18 @@ describe('PokemonService', () => {
   });
 
   it('should return 10 pokemons', () => {
-    pokemonService.getPokemons().subscribe((resp: any) => {
+    const subscriber = pokemonService.getPokemons().subscribe((resp) => {
         expect(resp.length).toBe(10);
+        subscriber.unsubscribe();
       });
     
   });
 
   it('should return pokemon pikachu with hp 30', () => {
-    pokemonService.getPokemonByName("pikachu").subscribe((resp: any) => {
+    const subscriber = pokemonService.getPokemonByName("pikachu").subscribe((resp: any) => {
         expect(resp.name).toBe("pikachu");
         expect(resp.stats[0].base_stat).toBe(30); 
+        subscriber.unsubscribe();
       });
   });
 
