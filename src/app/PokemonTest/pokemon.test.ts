@@ -43,6 +43,7 @@ describe('Combat entre pokemons', () => {
       });
 
   });
+  
   it('rattack should attack pikachu with 5', () => {
     expect(pokemonService.attack1(rattatack, pikachu)).toBe(5);
   });

@@ -19,7 +19,7 @@ export class PokemonService {
 
   private _attack = "attack";
 
-  private WhichShouldAttack(): Pokemon[] {
+  private whichShouldAttack(): Pokemon[] {
     return this.pokemon1.speed >= this.pokemon2.speed ? [this.pokemon1, this.pokemon2] : [this.pokemon2, this.pokemon1];
   }
 
@@ -64,7 +64,7 @@ export class PokemonService {
   round(forcedNumber?: number): string[][] {
 
     if (this.BothPokemonAreAlive()) {
-      const pokemonsInAttackOrder: Pokemon[] = this.WhichShouldAttack();
+      const pokemonsInAttackOrder: Pokemon[] = this.whichShouldAttack();
       this.attackAndAddResultToLog(pokemonsInAttackOrder[0], pokemonsInAttackOrder[1], forcedNumber);
       this.attackAndAddResultToLog(pokemonsInAttackOrder[1], pokemonsInAttackOrder[0], forcedNumber);
 
