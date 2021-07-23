@@ -42,8 +42,11 @@ describe('Combat entre pokemons', () => {
 
       });
 
+    pokemonService.pokemon1 = pikachu;
+    pokemonService.pokemon2 = rattatack;
+
   });
-  
+
   it('rattack should attack pikachu with 5', () => {
     expect(pokemonService.attack1(rattatack, pikachu)).toBe(5);
   });
@@ -62,6 +65,19 @@ describe('Combat entre pokemons', () => {
 
   it('rattack should attack pikachu with 7.5', () => {
     expect(pokemonService.attack4(pikachu, rattatack)).toBe(7.5);
+  });
+
+  it('fight should return actions', () => {
+    const subscriber = pokemonService.fight()
+      .subscribe(
+        (actions) => {
+          expect(actions).toBe(["rattatack WINS !!"]);
+          subscriber.unsubscribe();
+        })
+  });
+
+  it('round should return action', () => {
+    expect((pokemonService.round()).length).toBe(2);
   });
 
   /*it('rattack should random attack pikachu with message rattatack attack with charge and does 14 damages !', async () => {
