@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Pokemon} from "../modeles";
 import {HttpClient} from "@angular/common/http";
-import {interval, Observable, Subscription} from "rxjs";
+import {interval, Observable} from "rxjs";
 import {map, takeWhile} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
-  private subscriber: Subscription;
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
 
@@ -20,29 +19,29 @@ export class PokemonService {
 
   private _attack = "attack";
 
-  private WhichShouldAttack(): Pokemon[] {
+  private whichShouldAttack(): Pokemon[] {
     return this.pokemon1.speed >= this.pokemon2.speed ? [this.pokemon1, this.pokemon2] : [this.pokemon2, this.pokemon1];
   }
 
-  private calculateAttack(poke1: Pokemon, poke2: Pokemon): number {
+  private static calculateAttack(poke1: Pokemon, poke2: Pokemon): number {
     return (poke2.attack / (poke1.defense / 10));
   }
 
   attack1(poke1: Pokemon, poke2: Pokemon): number {
-    let damages = this.calculateAttack(poke1, poke2);
+    let damages = PokemonService.calculateAttack(poke1, poke2);
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
     return damages;
 
   }
 
   attack2(poke1: Pokemon, poke2: Pokemon): number {
-    let damages = this.calculateAttack(poke1, poke2) * 1.2;
+    let damages = PokemonService.calculateAttack(poke1, poke2) * 1.2;
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
     return damages;
   }
 
   attack3(poke1: Pokemon, poke2: Pokemon): number {
-    let damages = this.calculateAttack(poke1, poke2) * 1.3;
+    let damages = PokemonService.calculateAttack(poke1, poke2) * 1.3;
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
 
     return damages;
@@ -50,13 +49,13 @@ export class PokemonService {
   }
 
   attack4(poke1: Pokemon, poke2: Pokemon): number {
-    let damages = this.calculateAttack(poke1, poke2) * 1.5;
+    let damages = PokemonService.calculateAttack(poke1, poke2) * 1.5;
     poke1.hp = (poke1.hp - damages > 0) ? poke1.hp - damages : 0;
     return damages;
   }
 
   fight(): Observable<string[][]> {
-    return interval(1000).pipe(map(() => this.round()), takeWhile((actions) =>
+    return interval(1000).pipe(map(() => this.round()), takeWhile(() =>
       !this.isBattleOver
     ))
   }
@@ -65,7 +64,7 @@ export class PokemonService {
   round(forcedNumber?: number): string[][] {
 
     if (this.BothPokemonAreAlive()) {
-      const pokemonsInAttackOrder: Pokemon[] = this.WhichShouldAttack();
+      const pokemonsInAttackOrder: Pokemon[] = this.whichShouldAttack();
       this.attackAndAddResultToLog(pokemonsInAttackOrder[0], pokemonsInAttackOrder[1], forcedNumber);
       this.attackAndAddResultToLog(pokemonsInAttackOrder[1], pokemonsInAttackOrder[0], forcedNumber);
 
