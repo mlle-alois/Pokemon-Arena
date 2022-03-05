@@ -1,14 +1,12 @@
 def testSuccess = false
 pipeline {
     agent any
-
-
-
+    //Récupération de code sur github
     stages {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'main', credentialsId: 'github-token-final', url: 'https://github.com/mlle-alois/Pokemon-Arena'
+                git branch: 'main', credentialsId: 'github-token-final', url: 'https://github.com/amelie-qqch/Pokemon-Arena'
             }
         }
 
