@@ -4,10 +4,10 @@ export interface IPokemon {
   speed: number;
   attack: number;
   defense: number;
-  attack1Name: string;
-  attack2Name: string;
-  attack3Name: string;
-  attack4Name: string;
+  primaryAttachName: string;
+  secondaryAttackName: string;
+  thirdAttackName: string;
+  fourthAttackName: string;
   color?: string;
   defaultImagePath?: string;
   initialHP?: number;
@@ -19,10 +19,10 @@ export class Pokemon implements IPokemon {
   attack: number;
   speed: number;
   defense: number;
-  attack1Name: string;
-  attack2Name: string;
-  attack3Name: string;
-  attack4Name: string;
+  primaryAttachName: string;
+  secondaryAttackName: string;
+  thirdAttackName: string;
+  fourthAttackName: string;
   color?: string;
   defaultImagePath?: string;
   initialHp?: number;
@@ -34,10 +34,10 @@ export class Pokemon implements IPokemon {
     this.attack = props.attack
     this.defense = props.defense;
 
-    this.attack1Name = props.attack1Name;
-    this.attack2Name = props.attack2Name;
-    this.attack3Name = props.attack3Name;
-    this.attack4Name = props.attack4Name;
+    this.primaryAttachName = props.primaryAttachName;
+    this.secondaryAttackName = props.secondaryAttackName;
+    this.thirdAttackName = props.thirdAttackName;
+    this.fourthAttackName = props.fourthAttackName;
     this.color = props.color;
     this.defaultImagePath = props.defaultImagePath;
     this.initialHp = props.hp;

@@ -1,6 +1,7 @@
 def testSuccess = false
 pipeline {
     agent any
+    //blablablablablabla
     triggers {
       githubPullRequest()
     }
