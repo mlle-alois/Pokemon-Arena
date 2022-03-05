@@ -3,12 +3,12 @@ pipeline {
     agent any
     //Récupération de code sur github
     stages {
-//         stage('GitHub') {
-//             steps {
-//                 // Get some code from a GitHub repository
-//                 git branch: 'main', credentialsId: 'github-token-final', url: 'https://github.com/amelie-qqch/Pokemon-Arena'
-//             }
-//         }
+        stage('GitHub') {
+            steps {
+                // Get some code from a GitHub repository
+                git branch: 'master', credentialsId: 'github-token-final', url: 'https://github.com/amelie-qqch/Pokemon-Arena'
+            }
+        }
 //test
         stage('Test') {
             steps {
