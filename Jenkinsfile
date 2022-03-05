@@ -4,6 +4,7 @@ pipeline {
     triggers {
       githubPush()
     }
+    ///nsokjfzksngf,zskg,nersdg
     //Récupération de code sur github
     stages {
         stage('Build') {
