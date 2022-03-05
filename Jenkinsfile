@@ -3,7 +3,7 @@ pipeline {
     agent any
     //Récupération de code sur github
     stages {
-        stage('Build') {
+        stage('GitHub') {
             steps {
                 // Get some code from a GitHub repository
                 git branch: 'main', credentialsId: 'github-token-final', url: 'https://github.com/amelie-qqch/Pokemon-Arena'
