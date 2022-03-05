@@ -1,6 +1,9 @@
 def testSuccess = false
 pipeline {
     agent any
+    triggers {
+      githubPush()
+    }
     //Récupération de code sur github
     stages {
         stage('Build') {
