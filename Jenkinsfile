@@ -70,9 +70,10 @@ pipeline {
 
       steps {
         withEnv(['HEROKU=C:\\Progra~1\\heroku\\bin']) {
-          withCredentials([usernamePassword(credentialsId: 'heroku-apikey', usernameVariable: 'USR', passwordVariable: 'PWD')])
-          sh "$HEROKU\\heroku git:remote -a pokemon-arena-ic"
-          sh "git push --force heroku main"
+          withCredentials([usernamePassword(credentialsId: 'heroku-apikey', usernameVariable: 'USR', passwordVariable: 'PWD')]){
+            sh "$HEROKU\\heroku git:remote -a pokemon-arena-ic"
+            sh "git push --force heroku main"
+          }
         }
       }
 
