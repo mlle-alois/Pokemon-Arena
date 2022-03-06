@@ -56,9 +56,7 @@ pipeline {
 
       steps {
         withSonarQubeEnv(installationName: 'Instance sonar', credentialsId: 'Test-sonarqube') {
-          sh ""
-          "${scannerHome}/bin/sonar-scanner"
-          ""
+          sh """${scannerHome}/bin/sonar-scanner"""
         }
       }
     }
