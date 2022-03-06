@@ -70,10 +70,10 @@ pipeline {
 
       steps {
         withEnv(['HEROKU=/snap/bin/']) {
-          withCredentials([usernamePassword(credentialsId: 'heroku-apikey', usernameVariable: 'USR', passwordVariable: 'PWD')]){
+          withCredentials([usernamePassword(credentialsId: 'heroku-apikey', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
 //             sh "$HEROKU\\heroku git:remote -a pokemon-arena-ic"
 //             sh "git push --force heroku main"
-            sh('git push https://${USR}:${PWD}@git.heroku.com/pokemon-arena-ci.git HEAD:refs/heads/main')
+            sh('git push https://${USERNAME}:${PASSWORD}@git.heroku.com/pokemon-arena-ci.git HEAD:refs/heads/main')
           }
         }
       }
