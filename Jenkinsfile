@@ -2,7 +2,9 @@ def testSuccess = false
 pipeline {
     agent any
 
-
+    triggers {
+        githubPush()
+    }
 
     stages {
         stage('Build') {
@@ -29,13 +31,13 @@ pipeline {
 
                 success {
                     script {
-                        testSuccess = false
+                        testSuccess = true
                     }
                 }
 
                 failure {
                     script {
-                        testSuccess = true
+                        testSuccess = false
                     }
                 }
             }
@@ -53,10 +55,24 @@ pipeline {
             }
 
             steps {
-                withSonarQubeEnv(installationName: 'sonar-scan') {
+                withSonarQubeEnv(installationName: 'Instance sonar', credentialsId: 'Test-sonarqube') {
                   sh """${scannerHome}/bin/sonar-scanner"""
                 }
             }
         }
+
+        stage('Heroku Deploy'){
+            when {
+                expression {
+                    testSuccess
+                }
+            }
+
+            steps {
+                sh "heroku git:remote -a pokemon-arena-ic"
+                sh "git push --force heroku main"
+            }
+        }
+
     }
 }
