@@ -37,7 +37,7 @@ pipeline {
 
         failure {
           //Envoi un mail de notification
-          emailext attachmentsPattern: 'junit.xml' attachLog: true, body: 'les tests sont cassés', recipientProviders: [brokenTestsSuspects()], subject: 'test failure', to: 'amedouillard@hotmail.fr'
+          emailext attachmentsPattern: 'junit.xml', attachLog: true, body: 'les tests sont cassés', recipientProviders: [brokenTestsSuspects()], subject: 'test failure', to: 'amedouillard@hotmail.fr'
 
           script {
             testSuccess = false
