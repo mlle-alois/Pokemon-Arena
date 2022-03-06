@@ -5,7 +5,7 @@ pipeline {
     triggers {
         githubPush()
     }
-///Test pour trigger
+///Test pour trigger 2
     stages {
         stage('Build') {
             steps {
