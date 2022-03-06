@@ -82,7 +82,7 @@ describe('ArenaComponent', () => {
     component.pokemon1 = pikachu;
     component.pokemon2 = dracofeu;
 
-    expect(await component.fight()).toEqual(48);
+    expect(await component.fight()).toEqual(undefined);
   });
 
   it('Dracofeu should win againt pikachu 2', async () => {
