@@ -79,8 +79,15 @@ pipeline {
         }
       }
 
+        post {
+          // Enregistre les résultats des tests dans un rapport disponible sur jenkins
+          always {
+            emailext attachLog: true, body: 'Déploiement sur Heroku réussi', recipientProviders: [brokenTestsSuspects()], subject: 'Déploiement réussi', to: 'amedouillard@gmail.com;alois.zimmermann45@gmail.com'
+          }
+
+        }
+
     }
 
-//     emailext attachLog: true, body: 'les tests sont cassés', recipientProviders: [brokenTestsSuspects()], subject: 'test failure', to: 'amedouillard@hotmail.fr'
   }
 }
