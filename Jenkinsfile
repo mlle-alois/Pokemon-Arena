@@ -37,7 +37,7 @@ pipeline {
 
         failure {
           //Envoi un mail de notification
-          emailext attachmentsPattern: 'junit.xml', attachLog: true, body: 'les tests sont cassés', recipientProviders: [brokenTestsSuspects()], subject: 'test failure', to: 'amedouillard@gmail.com'
+          emailext attachmentsPattern: 'junit.xml', attachLog: true, body: 'les tests sont cassés', recipientProviders: [brokenTestsSuspects()], subject: 'test failure', to: 'amedouillard@gmail.com;ichtitski@gmail.com;alois.zimmermann45@gmail.com'
 
           script {
             testSuccess = false
@@ -82,7 +82,7 @@ pipeline {
         post {
           // Enregistre les résultats des tests dans un rapport disponible sur jenkins
           always {
-            emailext attachLog: true, body: 'Déploiement sur Heroku réussi', recipientProviders: [brokenTestsSuspects()], subject: 'Déploiement réussi', to: 'amedouillard@gmail.com;alois.zimmermann45@gmail.com'
+            emailext attachLog: true, body: 'Déploiement sur Heroku réussi', recipientProviders: [brokenTestsSuspects()], subject: 'Déploiement réussi', to: 'amedouillard@gmail.com;alois.zimmermann45@gmail.com;ichtitski@gmail.com'
           }
 
         }
